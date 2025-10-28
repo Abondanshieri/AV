@@ -1,309 +1,106 @@
 <!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Aula Virtual - UNAP</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+<html ng-app="App">
+<head lang="en">
+    <meta charset="UTF-8" />
+    <meta name="description" content="Aula Virtual" />
+    <meta name="author" content="Enchufate" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>Aula Virtual | UNAP</title>
+    <link href="https://aulavirtual2.unap.edu.pe/images/themes/unap/favicon.ico" rel="icon">
 
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            height: 100vh;
-            overflow: hidden;
-        }
+    <link rel="stylesheet" type="text/css" href="https://aulavirtual2.unap.edu.pe/assets/vendors/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" type="text/css" href="https://aulavirtual2.unap.edu.pe/assets/common/css/source/auth-main.css" />
+    <link rel="stylesheet" type="text/css" href="https://aulavirtual2.unap.edu.pe/assets/common/css/source/forms/form-validation.css" />
+    <link href="https://aulavirtual2.unap.edu.pe/css/login.css" rel="stylesheet" />
+    <link href="https://aulavirtual2.unap.edu.pe/css/themes/unap/login.css" rel="stylesheet" />
+    
 
-        .container {
-            display: flex;
-            height: 100vh;
-        }
+    <script src="https://aulavirtual2.unap.edu.pe/assets/vendors/jquery/jquery.min.js"></script>
+    <script src="https://aulavirtual2.unap.edu.pe/assets/vendors/tether/dist/js/tether.min.js"></script>
+    <script src="https://aulavirtual2.unap.edu.pe/assets/vendors/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="https://aulavirtual2.unap.edu.pe/assets/vendors/html5-form-validation/dist/jquery.validation.min.js"></script>
+    <script src="https://aulavirtual2.unap.edu.pe/assets/vendors/sweetalert/sweetalert.min.js"></script>
+    <script src="https://aulavirtual2.unap.edu.pe/assets/vendors/gsap/src/minified/TweenMax.min.js"></script>
+    <script src="https://aulavirtual2.unap.edu.pe/assets/common/js/common.js"></script>
+    <script src="https://aulavirtual2.unap.edu.pe/assets/js/login.js"></script>
+    <script src="https://aulavirtual2.unap.edu.pe/lib/@aspnet/signalr/dist/browser/signalr.min.js"></script>
+    <script src="https://aulavirtual2.unap.edu.pe/assets/vendors/toastr/toastr.min.js"></script>
+    <script src="https://aulavirtual2.unap.edu.pe/js/shared.js"></script>
+    
+    <script src="https://aulavirtual2.unap.edu.pe/js/beginningannouncements.js"></script>
 
-        .left-panel {
-            width: 35%;
-            background: white;
-            padding: 60px 80px;
-            position: relative;
-            overflow: hidden;
-        }
 
-        .logo {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            margin-bottom: 50px;
-            width: 20px;
-        }
+    <script src="https://aulavirtual2.unap.edu.pe/assets/vendors/angular/angular.min.js"></script>
+    <script src="https://aulavirtual2.unap.edu.pe/lib/angular-scripts/angular-messages.min.js"></script>
+    <script src="https://aulavirtual2.unap.edu.pe/lib/angular-scripts/angular-sanitize.min.js"></script>
+    <script src="https://aulavirtual2.unap.edu.pe/lib/angular-scripts/angular-animate.min.js"></script>
+    <script src="https://aulavirtual2.unap.edu.pe/app/app.js"></script>
+    
+    <script src="https://aulavirtual2.unap.edu.pe/app/Controllers/account-controller.js?v=NbbbcHOK1hq4WaKDAJfEHUN6ImJ4iPb5Th2Cs_JnMRY"></script>
 
-        .logo-img {
-            width: 300px;
-            height: 60px;
-            border-radius: 8px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-weight: bold;
-        }
-
-        .logo-text {
-            font-size: 13px;
-            line-height: 1.3;
-            color: #333;
-        }
-
-        .logo-text strong {
-            display: block;
-            font-weight: 600;
-        }
-
-        h1 {
-            color: #00b8d4;
-            font-size: 36px;
-            font-weight: 500;
-            letter-spacing: 1px;
-            margin-bottom: 40px;
-            
-        }
-
-        .form-group {
-            margin-bottom: 30px;
-            position: relative;
-        }
-
-        label {
-            display: block;
-            color: #999;
-            font-size: 13px;
-            text-transform: uppercase;
-            margin-bottom: 8px;
-            letter-spacing: 0.5px;
-        }
-
-        .input-wrapper {
-            position: relative;
-        }
-
-        input {
-            width: 100%;
-            padding: 12px 40px 12px 12px;
-            border: none;
-            border-bottom: 2px solid #ddd;
-            font-size: 15px;
-            transition: border-color 0.3s;
-            background: transparent;
-        }
-
-        input:focus {
-            outline: none;
-            border-bottom-color: #00b8d4;
-        }
-
-        .input-icon {
-            position: absolute;
-            right: 10px;
-            top: 50%;
-            transform: translateY(-50%);
-            color: #666;
-            font-size: 18px;
-        }
-
-        .btn-login {
-            width: 100%;
-            padding: 15px;
-            background: #006a8f;
-            color: white;
-            border: none;
-            border-radius: 4px;
-            font-size: 15px;
-            font-weight: 600;
-            letter-spacing: 1px;
-            cursor: pointer;
-            transition: background 0.3s;
-            margin-top: 20px;
-            text-transform: uppercase;
-        }
-
-        .btn-login:hover {
-            background: #005070;
-        }
-
-        .forgot-password {
-            display: block;
-            text-align: left;
-            margin-top: 20px;
-            color: #00b8d4;
-            text-decoration: none;
-            font-size: 14px;
-            transition: color 0.3s;
-        }
-
-        .forgot-password:hover {
-            color: #006a8f;
-        }
-
-        .geometric-shape {
-            position: absolute;
-            background: linear-gradient(135deg, #006a8f 0%, #00b8d4 100%);
-            opacity: 0.1;
-        }
-
-        .shape1 {
-            width: 300px;
-            height: 300px;
-            bottom: -100px;
-            left: -100px;
-            transform: rotate(45deg);
-        }
-
-        .shape2 {
-            width: 150px;
-            height: 150px;
-            top: 100px;
-            right: -50px;
-            transform: rotate(25deg);
-        }
-
-        .right-panel {
-            width: 65%;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .right-panel img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            opacity: 80%;
-        }
-
-        .overlay-shapes {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-        }
-
-        .diamond {
-            position: absolute;
-            width: 80px;
-            height: 80px;
-            background: linear-gradient(135deg, #006a8f 0%, #00b8d4 100%);
-            transform: rotate(45deg);
-            opacity: 0.7;
-        }
-
-        .diamond1 {
-            top: 80px;
-            right: 150px;
-            width: 60px;
-            height: 60px;
-        }
-
-        .diamond2 {
-            bottom: 100px;
-            left: 100px;
-            width: 100px;
-            height: 100px;
-            background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
-        }
-
-        .diamond3 {
-            top: 50%;
-            right: 80px;
-            width: 70px;
-            height: 70px;
-            background: linear-gradient(135deg, #1e40af 0%, #2563eb 100%);
-        }
-
-        @media (max-width: 768px) {
-            .container {
-                flex-direction: column;
-            }
-
-            .left-panel, .right-panel {
-                width: 100%;
-            }
-
-            .right-panel {
-                height: 30vh;
-            }
-
-            .left-panel {
-                padding: 40px 30px;
-            }
-        }
-    </style>
 </head>
-<body>
-    <div class="container">
-        <div class="left-panel">
-            <div class="geometric-shape shape1"></div>
-            <div class="geometric-shape shape2"></div>
-            
-            <div class="logo">
-                <img class="logo-img" src="logo.png">
-            </div>
+<body class="theme-dark single-page single-page-inverse">
+    <section class="wrapper">
+        <div class="intro">
+            <div class="left-ovh">
+                <div class="left-side">
+                    <input id="IsLockedOut" value="0" hidden />
+<input id="Reason" value="" hidden />
+<div class="m-login__wrapper" ng-controller="login">
+    <form class="form">
+        <a href="index.html#">
+            <img class="logo" src="https://aulavirtual2.unap.edu.pe/images/themes/unap/logo.png" draggable="false">
+        </a>
+        <h1>AULA VIRTUAL</h1>
+        <div ng-if="message != ''" class="text-danger" style="font-weight: 500;" ng-bind-html="message"></div>
+        <div class="group">
+            <input ng-model="username" placeholder="USUARIO" autocomplete="off" />
+            <img class="ico" src="https://aulavirtual2.unap.edu.pe/images/login/user.svg" />
+            <div class="bar"></div>
+        </div>
+        <div class="group">
+            <input ng-model="password" type="password" placeholder="CONTRASEÑA" />
+            <i ng-if="password != '' && password != null" class="fa" ng-class="{'fa-eye' : show, 'fa-eye-slash' : !show}" ng-click="swap();"></i>
+            <img ng-if="password == '' || password == null" class="ico" src="https://aulavirtual2.unap.edu.pe/images/login/pass.svg" />
+            <div class="bar"></div>
+        </div>
+        <div class="group">
+            <button id="m_login_signin_submit" class="btn button-submit">
+                INGRESAR
+            </button>
+            <a class="forget-password-label" href="https://aulavirtual2.unap.edu.pe/account/ForgotPassword">¿Olvidaste tu contraseña?</a>
+        </div>
+    </form>
+</div>
+<!--begin::Modal-->
+<input type="hidden" id="BeginningAnnouncement" value="true" />
+<!--end::Modal-->
 
-            <h1>AULA VIRTUAL</h1>
-
-            <form id="loginForm">
-                <div class="form-group">
-                    <label for="usuario">USUARIO</label>
-                    <div class="input-wrapper">
-                        <input type="text" id="usuario" name="usuario" required>
-                        <span class="input-icon">👤</span>
+                    <div style="width:145px;left:25px;bottom:25px;position: fixed;">
+                        <img src="https://aulavirtual2.unap.edu.pe/images/login/logo.svg" style="" class="logo" />
                     </div>
                 </div>
-
-                <div class="form-group">
-                    <label for="password">CONTRASEÑA</label>
-                    <div class="input-wrapper">
-                        <input type="password" id="password" name="password" required>
-                        <span class="input-icon" style="color: #27394e;">🔒</span>
-                    </div>
-                </div>
-
-                <button type="submit" class="btn-login">Ingresar</button>
-
-                <a href="#" class="forgot-password">¿Olvidaste tu contraseña?</a>
-            </form>
-        </div>
-
-        <div class="right-panel">
-            <img src="login.jpg" alt="Estudiantes universitarios">
-            <div class="overlay-shapes">
-                <div class="diamond diamond1"></div>
-                <div class="diamond diamond2"></div>
-                <div class="diamond diamond3"></div>
+                <div class="triangle"></div>
+            </div>
+            <div class="triangle right"></div>
+            <div class="container-shape one">
+                <div class="shape one"></div>
+            </div>
+            <div class="container-shape two">
+                <div class="shape two"></div>
+            </div>
+            <div class="container-shape right three">
+                <div class="right shape three"></div>
+            </div>
+            <div class="container-shape right four">
+                <div class="right shape four"></div>
+            </div>
+            <div class="container-shape right five">
+                <div class="right shape five"></div>
             </div>
         </div>
-    </div>
-
-    <script>
-        document.getElementById('loginForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            const usuario = document.getElementById('usuario').value;
-            const password = document.getElementById('password').value;
-            
-            if (usuario && password) {
-                alert('Funcionalidad de login no implementada. Este es solo un diseño de interfaz.');
-            }
-        });
-
-        // Animación sutil para las formas geométricas
-        const shapes = document.querySelectorAll('.diamond');
-        shapes.forEach((shape, index) => {
-            setInterval(() => {
-                shape.style.transform = `rotate(${45 + Math.sin(Date.now() / 1000 + index) * 5}deg)`;
-            }, 50);
-        });
-    </script>
+    </section>
+    
 </body>
 </html>
